@@ -84,3 +84,21 @@ Example:
     waitFor: 0
 }
 ```
+
+### **screenshot**
+
+Definition:
+
+```
+{
+    type: 'screenshot'
+}
+```
+
+Example:
+
+```
+{
+    type: 'screenshot'
+}
+```

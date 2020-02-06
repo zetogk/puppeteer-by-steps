@@ -53,6 +53,10 @@ class Scrapper {
 					await this.goTo(step.link, step.waitFor);
 					break;
 
+				case 'screenshot':
+					await this.screenshot();
+					break;
+
 				default:
 					log(`${step.type} is not implemented yet.`);
 					break;
@@ -62,14 +66,14 @@ class Scrapper {
 
 	} // end scrap
 
-	async click (selector, waitFor=0) {
+	async click(selector, waitFor = 0) {
 
-        log(`Click on selector ${selector}`)
-        await this.page.waitForSelector(selector);
-        await this.page.click(selector, {waitUntil: 'domcontentloaded'});
-        await this.page.waitFor(waitFor);
+		log(`Click on selector ${selector}`)
+		await this.page.waitForSelector(selector);
+		await this.page.click(selector, { waitUntil: 'domcontentloaded' });
+		await this.page.waitFor(waitFor);
 
-    } // end click
+	} // end click
 
 	async goTo(url, waitFor = 0) {
 
@@ -78,5 +82,12 @@ class Scrapper {
 		await this.page.waitFor(waitFor);
 
 	} // end goTo
+
+	async screenshot() {
+
+		log('Taking screenshot');
+		await this.page.screenshot({ path: `./${Date.now()}.png` });
+
+	} // end screenshot
 
 } // end class Scrapper
