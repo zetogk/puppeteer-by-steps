@@ -57,6 +57,10 @@ class Scrapper {
 					await this.screenshot();
 					break;
 
+				case 'wait-for-selector':
+					await this.waitForSelector(step.selector);
+					break;
+
 				default:
 					log(`${step.type} is not implemented yet.`);
 					break;
@@ -89,5 +93,14 @@ class Scrapper {
 		await this.page.screenshot({ path: `./${Date.now()}.png` });
 
 	} // end screenshot
+
+	async waitForSelector(selector) {
+
+		log(`Waiting for the selector ${selector}`);
+		await this.page.waitForSelector(selector, {
+			visible: true
+		});
+
+	} // end waitForSelector
 
 } // end class Scrapper

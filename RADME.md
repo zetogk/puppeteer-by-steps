@@ -102,3 +102,23 @@ Example:
     type: 'screenshot'
 }
 ```
+
+### **wait-for-selector**
+
+Definition:
+
+```
+{
+    type: 'wait-for-selector',
+    selector: <string:required>, // Selector which will be used for complete the action
+}
+```
+
+Example:
+
+```
+{
+    type: 'wait-for-selector',
+    selector: '.mydiv'
+}
+```
