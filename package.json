@@ -1,0 +1,18 @@
+{
+  "name": "puppeteer-by-steps",
+  "version": "1.0.0",
+  "description": "Use puppeteer by instructions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "scrapping",
+    "Puppeteer"
+  ],
+  "author": "Santiago Yepes <zetogk@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^2.0.0"
+  }
+}
