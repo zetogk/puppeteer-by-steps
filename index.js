@@ -37,4 +37,32 @@ class Scrapper {
 
 	}
 
-}
+	async scrap() {
+
+		for (let $i = 0; $i < this.steps.length; $i++) {
+
+			const step = this.steps[$i];
+
+			switch (step.type) {
+
+				case 'go-to':
+					await this.goTo(step.link, step.waitFor);
+					break;
+
+				default:
+					log(`${step.type} is not implemented yet.`);
+					break;
+			}
+
+		}
+
+	} // end scrap
+
+	async goTo(url, waitFor = 0) {
+
+        await this.page.goto(url, { waitUntil: 'networkidle2' });
+        await this.page.waitFor(waitFor);
+
+    } // en goTo
+
+} // end class Scrapper

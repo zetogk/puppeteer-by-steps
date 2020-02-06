@@ -38,3 +38,15 @@ await s.init(); // Init setting required by Puppeteer
 await s.scrap(); // Start the scrapping process
 
 ```
+
+## Steps
+
+### go-to
+
+```
+{
+    type: 'go-to',
+    link: <string:url:required>, // URL which will be visited
+    waitFor: <number:default=0> // Milliseconds to await after complete the task
+}
+```
