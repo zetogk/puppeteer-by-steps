@@ -41,12 +41,46 @@ await s.scrap(); // Start the scrapping process
 
 ## Steps
 
-### go-to
+### **click**
+
+Definition:
+
+```
+{
+    type: 'click',
+    selector: <string:required>, // Selector which will be used for complete the action
+    waitFor: <number:default=0> // Milliseconds to await after complete the action
+}
+```
+
+Example:
+
+```
+{
+    type: 'click',
+    selector: 'a.mylink'
+    waitFor: 10
+}
+```
+
+### **go-to**
+
+Definition:
 
 ```
 {
     type: 'go-to',
     link: <string:url:required>, // URL which will be visited
-    waitFor: <number:default=0> // Milliseconds to await after complete the task
+    waitFor: <number:default=0> // Milliseconds to await after complete the action
+}
+```
+
+Example:
+
+```
+{
+    type: 'go-to',
+    link: 'https://github.com/zetogk',
+    waitFor: 0
 }
 ```

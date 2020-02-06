@@ -45,6 +45,10 @@ class Scrapper {
 
 			switch (step.type) {
 
+				case 'click':
+					await this.click(step.selector, step.waitFor);
+					break;
+
 				case 'go-to':
 					await this.goTo(step.link, step.waitFor);
 					break;
@@ -58,11 +62,21 @@ class Scrapper {
 
 	} // end scrap
 
-	async goTo(url, waitFor = 0) {
+	async click (selector, waitFor=0) {
 
-        await this.page.goto(url, { waitUntil: 'networkidle2' });
+        log(`Click on selector ${selector}`)
+        await this.page.waitForSelector(selector);
+        await this.page.click(selector, {waitUntil: 'domcontentloaded'});
         await this.page.waitFor(waitFor);
 
-    } // en goTo
+    } // end click
+
+	async goTo(url, waitFor = 0) {
+
+		log(`Going to ${link}`);
+		await this.page.goto(url, { waitUntil: 'networkidle2' });
+		await this.page.waitFor(waitFor);
+
+	} // end goTo
 
 } // end class Scrapper
