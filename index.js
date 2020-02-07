@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { log } = console;
+const { error, log } = console;
 
 class Scrapper {
 
@@ -47,6 +47,10 @@ class Scrapper {
 
 				case 'click':
 					await this.click(step.selector, step.waitFor);
+					break;
+
+				case 'collect-data':
+					await this.collectData(step.prop, step.selector, step.contentType, step.multiple);
 					break;
 
 				case 'go-to':
@@ -102,5 +106,45 @@ class Scrapper {
 		});
 
 	} // end waitForSelector
+
+	async collectData(prop, selector, contentType = 'innerText', multiple = false) {
+
+		log(`Collecting data for selector ${selector} - multiple data? ${multiple}`);
+
+		const availableContentTypes = ['innerText', 'outerHTML'];
+
+		if (!availableContentTypes.includes(contentType)) {
+
+			log('Content type is not valid, the action is omitted');
+			return;
+
+		}
+
+		try {
+
+			if (!multiple) {
+
+				this.collectedData[prop] = await this.page.$eval(selector, el => el[contentType]);
+
+			} else {
+
+				this.collectedData[prop] = await this.page.$$eval(selector, els => {
+
+					return els.map(el => el[contentType]);
+
+				});
+
+			}
+
+			log(`Prop ${prop} collected with value ${this.collectedData[prop]}`);
+
+		} catch (err) {
+
+			error('Error getting data::: ', err);
+			this.collectedData[prop] = 'error-getting-data';
+
+		}
+
+	} // end collectData
 
 } // end class Scrapper

@@ -63,6 +63,46 @@ Example:
 }
 ```
 
+### **collect-data**
+
+Definition:
+You can store data inside an object of the your Scrapper instance, this data can be retrieved using the method `getCollectedData`;
+
+```
+{
+    type: 'collect-data',
+    prop: '<string|required>', // Name of prop inside the *collectedData*
+    selector: <string:required>, // Selector which will be used for complete the action
+    contentType: <string:default=innerText:options=innerText,outerHTML> // Type of information you can extract form the selector,
+    multiple: <boolean:default=false> // By default returns only one value, otherwise, if there are more one value matched with the selector, will be returned an array
+}
+```
+
+Example not-multiple:
+
+```
+{
+    type: 'collect-data',
+    prop: 'title',
+    selector: 'h1',
+    contentType: 'innerText',
+    multiple: false
+}
+```
+
+Example multiple:
+
+```
+{
+    type: 'collect-data',
+    prop: 'subtitles',
+    selector: 'h3',
+    contentType: 'innerText',
+    multiple: true
+}
+```
+
+
 ### **go-to**
 
 Definition:
