@@ -81,9 +81,17 @@ class Scrapper {
 	async click(selector, waitFor = 0) {
 
 		log(`Click on selector ${selector}`)
-		await this.page.waitForSelector(selector);
-		await this.page.click(selector, { waitUntil: 'domcontentloaded' });
-		await this.page.waitFor(waitFor);
+		try {
+
+			await this.page.waitForSelector(selector);
+			await this.page.click(selector, { waitUntil: 'domcontentloaded' });
+			await this.page.waitFor(waitFor);
+
+		} catch (err) {
+
+			error('Error doing click: ', err.message);
+
+		}
 
 	} // end click
 
@@ -104,15 +112,15 @@ class Scrapper {
 
 			if (!multiple) {
 
-				this.collectedData[prop] = await this.page.$eval(selector, el => el[contentType]);
+				this.collectedData[prop] = await this.page.$eval(selector, (el, contentType) => el[contentType], contentType);
 
 			} else {
 
-				this.collectedData[prop] = await this.page.$$eval(selector, els => {
+				this.collectedData[prop] = await this.page.$$eval(selector, (els, contentType) => {
 
 					return els.map(el => el[contentType]);
 
-				});
+				}, contentType);
 
 			}
 
@@ -139,6 +147,11 @@ class Scrapper {
 			switch (type) {
 				case 'input':
 					log(`Enter input :${selector}: with value :${valueToAssign}:`);
+					await this.page.$eval(selector, (el)  => {
+
+                        el.value = ''
+        
+                    }); // Delete data
 					await this.page.focus(selector);
 					await this.page.keyboard.type(valueToAssign);
 					break;
@@ -179,7 +192,7 @@ class Scrapper {
 
 	async goTo(url, waitFor = 0) {
 
-		log(`Going to ${link}`);
+		log(`Going to ${url}`);
 		await this.page.goto(url, { waitUntil: 'networkidle2' });
 		await this.page.waitFor(waitFor);
 
@@ -202,3 +215,5 @@ class Scrapper {
 	} // end waitForSelector
 
 } // end class Scrapper
+
+module.exports = Scrapper;
