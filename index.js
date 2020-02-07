@@ -83,30 +83,6 @@ class Scrapper {
 
 	} // end click
 
-	async goTo(url, waitFor = 0) {
-
-		log(`Going to ${link}`);
-		await this.page.goto(url, { waitUntil: 'networkidle2' });
-		await this.page.waitFor(waitFor);
-
-	} // end goTo
-
-	async screenshot() {
-
-		log('Taking screenshot');
-		await this.page.screenshot({ path: `./${Date.now()}.png` });
-
-	} // end screenshot
-
-	async waitForSelector(selector) {
-
-		log(`Waiting for the selector ${selector}`);
-		await this.page.waitForSelector(selector, {
-			visible: true
-		});
-
-	} // end waitForSelector
-
 	async collectData(prop, selector, contentType = 'innerText', multiple = false) {
 
 		log(`Collecting data for selector ${selector} - multiple data? ${multiple}`);
@@ -146,5 +122,35 @@ class Scrapper {
 		}
 
 	} // end collectData
+
+	getCollectedData() {
+
+		return this.collectedData;
+
+	} // end getCollectedData
+
+	async goTo(url, waitFor = 0) {
+
+		log(`Going to ${link}`);
+		await this.page.goto(url, { waitUntil: 'networkidle2' });
+		await this.page.waitFor(waitFor);
+
+	} // end goTo
+
+	async screenshot() {
+
+		log('Taking screenshot');
+		await this.page.screenshot({ path: `./${Date.now()}.png` });
+
+	} // end screenshot
+
+	async waitForSelector(selector) {
+
+		log(`Waiting for the selector ${selector}`);
+		await this.page.waitForSelector(selector, {
+			visible: true
+		});
+
+	} // end waitForSelector
 
 } // end class Scrapper

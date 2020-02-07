@@ -39,7 +39,40 @@ await s.scrap(); // Start the scrapping process
 
 ```
 
-## Steps
+## Methods
+
+### ***async* init**
+
+This method is required after you instance the Scrapper.
+
+Use:
+
+```
+await s.init();
+```
+
+### ***async*  scrap**
+
+This method will run the different steps which have been passed to the Scrapper.
+
+Use:
+
+```
+await s.scrap();
+```
+
+### **getCollectedData**
+
+This method returns the data collected across the different steps.
+
+Use:
+
+```
+const data = s.getCollectedData();
+```
+
+## Methods (Steps)
+You can invoke it in individual way or using in steps.
 
 ### **click**
 
