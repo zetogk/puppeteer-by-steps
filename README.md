@@ -135,6 +135,63 @@ Example multiple:
 }
 ```
 
+### **fill-data**
+
+Definition:
+You can set values to inputs, selects or radio buttoms.
+
+```
+{
+    type: 'fill-data',
+    data: [<Data>]
+}
+
+<Data>: {
+    type: <string:required:options=input,select,radio>,
+    selector: <string:required>, // Selector which will be used for complete the action
+    origin: <string:options=static,dynamic>, // 'Static' will take the value of the prop *value*, 'dynamic' will take the value of the *objectData* passed at moment of instance creation.
+    value: <string> //(For radio buttoms is the index of the option. Example: '0' or '2')
+}
+```
+
+Example static value:
+
+```
+{
+    type: 'fill-data',
+    data: [{
+        type: 'input',
+        selector: '#homeaddress',
+        origin: 'static',
+        value: 'street 32' // *street 32* will be the value set
+    },{
+        type: 'input',
+        selector: '#phonenumber',
+        origin: 'static',
+        value: '18601234567' //*18601234567* will be the value set
+    }]
+}
+```
+
+Example dynamic value:
+
+```
+{
+    type: 'fill-data',
+    data: [{
+        type: 'input',
+        selector: '#homeaddress',
+        origin: 'dynamic',
+        value: 'user_home_address' // The value set will be the value for objectClass.user_home_address (Passed in the creation of the Scrapper instance)
+    },{
+        type: 'input',
+        selector: '#phonenumber',
+        origin: 'dynamic',
+        value: 'user_phone' // The value set will be the value for objectClass.user_phone (Passed in the creation of the Scrapper instance)
+    }]
+}
+```
+
 
 ### **go-to**
 

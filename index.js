@@ -53,6 +53,10 @@ class Scrapper {
 					await this.collectData(step.prop, step.selector, step.contentType, step.multiple);
 					break;
 
+				case 'fill-data':
+					await this.fillData(step.data, step.waitFor);
+					break;
+
 				case 'go-to':
 					await this.goTo(step.link, step.waitFor);
 					break;
@@ -122,6 +126,50 @@ class Scrapper {
 		}
 
 	} // end collectData
+
+	async fillData(data, waitFor = 0) {
+
+		for (let $i = 0; $i < data.length; $i++) {
+
+			const { type, selector, origin, value } = data[$i];
+			const valueToAssign = origin == 'static' ? value : this.objectData[value];
+
+			await this.page.waitForSelector(selector);
+
+			switch (type) {
+				case 'input':
+					log(`Enter input :${selector}: with value :${valueToAssign}:`);
+					await this.page.focus(selector);
+					await this.page.keyboard.type(valueToAssign);
+					break;
+
+				case 'select':
+					log(`Select :${selector}: with value :${valueToAssign}:`);
+					await this.page.select(selector, valueToAssign);
+					break;
+
+				case 'radio':
+					log(`Choose radio :${selector}: with value :${valueToAssign}:`);
+					await this.page.$$eval(selector, (el, valueToAssign) => {
+
+						el[valueToAssign].click();
+
+					}, valueToAssign);
+					break;
+
+				default:
+					await this.page.$eval(selector, (el, valueToAssign) => {
+
+						el.value = valueToAssign
+
+					}, valueToAssign);
+					break;
+			}
+
+		}
+		await this.page.waitFor(waitFor);
+
+	} // end fillData
 
 	getCollectedData() {
 
