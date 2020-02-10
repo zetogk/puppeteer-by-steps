@@ -39,6 +39,12 @@ class Scrapper {
 
 	} // end setSteps
 
+	async closeBrowser() {
+
+		await this.browser.close();
+
+	} // end closeBrowser
+
 	async init() {
 
 		this.browser = await puppeteer.launch(this.optionsBrowser);
@@ -47,7 +53,7 @@ class Scrapper {
 		const { height, width } = this.dimensions;
 		await this.page.setViewport({ width, height });
 
-	}
+	} // end init
 
 	async scrap() {
 

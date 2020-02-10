@@ -71,6 +71,38 @@ Use:
 const data = s.getCollectedData();
 ```
 
+
+### **getSteps**
+
+This method returns the array with current steps
+
+Use:
+
+```
+const data = s.getSteps();
+```
+
+
+### **setSteps**
+
+This method sets the steps.
+
+Use:
+
+```
+const data = s.setSteps([<Step>]);
+```
+
+### ***async* closeBrowser**
+
+This method closes the browser.
+
+Use:
+
+```
+await s.closeBrowser();
+```
+
 ## Methods (Steps)
 You can invoke it in individual way or using in steps.
 
