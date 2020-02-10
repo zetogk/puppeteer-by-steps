@@ -27,6 +27,18 @@ class Scrapper {
 
 	}
 
+	getSteps() {
+
+		return this.steps;
+
+	} // end getSteps
+
+	setSteps(steps) {
+
+		this.steps = steps;
+
+	} // end setSteps
+
 	async init() {
 
 		this.browser = await puppeteer.launch(this.optionsBrowser);
