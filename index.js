@@ -3,7 +3,7 @@ const { error, log } = console;
 
 class Scrapper {
 
-	constructor(dimensions, showBrowser, steps, objectData) {
+	constructor(dimensions, showBrowser, steps, objectData, customChromium) {
 
 		this.objectData = objectData;
 		this.steps = steps;
@@ -13,6 +13,7 @@ class Scrapper {
 		const { height, width } = this.dimensions;
 
 		this.optionsBrowser = {
+			executablePath: customChromium,
 			headless: !showBrowser,
 			ignoreHTTPSErrors: true,
 			timeout: 30000,
