@@ -10,7 +10,7 @@ It allows you doing basic scrapping in a easy way.
 Get a new instance of Scrapper
 
 ```
-Scrapper(<dimensions>, <showBrowser>, <steps>, <objectData>)
+Scrapper(<dimensions>, <showBrowser>, <steps>, <objectData>, <customChromium>)
 
 dimensions: {
     height: <number>
@@ -29,6 +29,9 @@ objectData: {
     yourProp2: 'prop2',
     yourProp3: 'prop3'
 }
+
+customChromium: <string>
+// if customChromium = ''. The Chromium to be used will be the installed by Puppeteer; otherwise, The Chromium to be used will be the past one.
 ```
 
 ```

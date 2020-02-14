@@ -3,7 +3,7 @@ const { error, log } = console;
 
 class Scrapper {
 
-	constructor(dimensions, showBrowser, steps, objectData, customChromium) {
+	constructor(dimensions, showBrowser, steps, objectData, customChromium = '') {
 
 		this.objectData = objectData;
 		this.steps = steps;
@@ -13,7 +13,6 @@ class Scrapper {
 		const { height, width } = this.dimensions;
 
 		this.optionsBrowser = {
-			executablePath: customChromium,
 			headless: !showBrowser,
 			ignoreHTTPSErrors: true,
 			timeout: 30000,
@@ -24,6 +23,10 @@ class Scrapper {
 				'--no-sandbox',
 				'--disable-setuid-sandbox'
 			]
+		}
+
+		if (customChromium != '') {
+			this.optionsBrowser.executablePath = customChromium;
 		}
 
 	}
