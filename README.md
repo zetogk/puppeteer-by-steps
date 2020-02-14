@@ -276,6 +276,7 @@ Definition:
 {
     type: 'wait-for-selector',
     selector: <string:required>, // Selector which will be used for complete the action
+    timeout: <number> // milliseconds
 }
 ```
 
@@ -284,6 +285,7 @@ Example:
 ```
 {
     type: 'wait-for-selector',
-    selector: '.mydiv'
+    selector: '.mydiv',
+    timeout: 10000
 }
 ```

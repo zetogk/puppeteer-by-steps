@@ -88,7 +88,7 @@ class Scrapper {
 					break;
 
 				case 'wait-for-selector':
-					await this.waitForSelector(step.selector);
+					await this.waitForSelector(step.selector, step.timeout || 30000);
 					break;
 
 				default:
@@ -227,11 +227,12 @@ class Scrapper {
 
 	} // end screenshot
 
-	async waitForSelector(selector) {
+	async waitForSelector(selector, timeout = 30000) {
 
 		log(`Waiting for the selector ${selector}`);
 		await this.page.waitForSelector(selector, {
-			visible: true
+			visible: true,
+			timeout
 		});
 
 	} // end waitForSelector
