@@ -250,6 +250,31 @@ Example:
 }
 ```
 
+### **press-key**
+
+Definition:
+
+[List of keys - US Keyboard Layout](https://github.com/puppeteer/puppeteer/blob/master/lib/USKeyboardLayout.js)
+
+```
+{
+    type: 'press-key',
+    key: <string:required>, // Visit the keyboard layout to know the keys
+    waitFor: <number:default=0> // Milliseconds to await after complete the action
+}
+```
+
+Example:
+
+```
+{
+    type: 'press-key',
+    key: 'Escape',
+    waitFor: 1000
+}
+```
+
+
 ### **screenshot**
 
 Definition:

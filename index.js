@@ -83,6 +83,9 @@ class Scrapper {
 					await this.goTo(step.link, step.waitFor);
 					break;
 
+				case 'press-key':
+					await this.pressKey(step.key, step.waitFor);
+
 				case 'screenshot':
 					await this.screenshot();
 					break;
@@ -169,11 +172,11 @@ class Scrapper {
 			switch (type) {
 				case 'input':
 					log(`Enter input :${selector}: with value :${valueToAssign}:`);
-					await this.page.$eval(selector, (el)  => {
+					await this.page.$eval(selector, (el) => {
 
-                        el.value = ''
-        
-                    }); // Delete data
+						el.value = ''
+
+					}); // Delete data
 					await this.page.focus(selector);
 					await this.page.keyboard.type(valueToAssign);
 					break;
@@ -219,6 +222,13 @@ class Scrapper {
 		await this.page.waitFor(waitFor);
 
 	} // end goTo
+
+	async pressKey(key, waitFor = 0) {
+
+		await this.page.keyboard.press(key);
+		await this.page.waitFor(waitFor);
+
+	} // end pressKey
 
 	async screenshot() {
 
