@@ -85,6 +85,7 @@ class Scrapper {
 
 				case 'press-key':
 					await this.pressKey(step.key, step.waitFor);
+					break;
 
 				case 'screenshot':
 					await this.screenshot();
