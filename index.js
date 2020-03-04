@@ -121,11 +121,11 @@ class Scrapper {
 
 	} // end click
 
-	async collectData(prop, selector, contentType = 'innerText', multiple = false) {
+	async collectData(prop, selector, contentType = 'value', multiple = false) {
 
 		log(`Collecting data for selector ${selector} - multiple data? ${multiple}`);
 
-		const availableContentTypes = ['innerText', 'outerHTML'];
+		const availableContentTypes = ['innerText', 'outerHTML', 'value'];
 
 		if (!availableContentTypes.includes(contentType)) {
 
