@@ -335,3 +335,9 @@ Example:
     timeout: 10000
 }
 ```
+
+## Authors
+* zetogk <zetogk@gmail.com>
+
+### Contributors
+* Maximo-Miranda <maximomirandah@gmail.com>
