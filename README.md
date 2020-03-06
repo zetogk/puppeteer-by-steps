@@ -194,14 +194,16 @@ You can set values to inputs, selects or radio buttoms.
 ```
 {
     type: 'fill-data',
-    data: [<Data>]
+    data: [<Data>],
+    waitFor: <number:default=0> // Milliseconds to await after complete the action
 }
 
 <Data>: {
     type: <string:required:options=input,select,radio>,
     selector: <string:required>, // Selector which will be used for complete the action
     origin: <string:options=static,dynamic>, // 'Static' will take the value of the prop *value*, 'dynamic' will take the value of the *objectData* passed at moment of instance creation.
-    value: <string> //(For radio buttoms is the index of the option. Example: '0' or '2')
+    value: <string> //(For radio buttoms is the index of the option. Example: '0' or '2'),
+    waitFor: <number:default=0> // Milliseconds to await after complete the action
 }
 ```
 
@@ -214,13 +216,15 @@ Example static value:
         type: 'input',
         selector: '#homeaddress',
         origin: 'static',
-        value: 'street 32' // *street 32* will be the value set
+        value: 'street 32' // *street 32* will be the value set,
+        waitFor: 1000
     },{
         type: 'input',
         selector: '#phonenumber',
         origin: 'static',
         value: '18601234567' //*18601234567* will be the value set
-    }]
+    }],
+    waitFor: <number:default=0> // Milliseconds to await after complete the action
 }
 ```
 
@@ -239,7 +243,8 @@ Example dynamic value:
         selector: '#phonenumber',
         origin: 'dynamic',
         value: 'user_phone' // The value set will be the value for objectClass.user_phone (Passed in the creation of the Scrapper instance)
-    }]
+    }],
+    waitFor: 2000
 }
 ```
 

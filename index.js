@@ -177,7 +177,7 @@ class Scrapper {
 
 		for (let $i = 0; $i < data.length; $i++) {
 
-			const { type, selector, origin, value } = data[$i];
+			const { type, selector, origin, value, waitFor } = data[$i];
 			const valueToAssign = origin == 'static' ? value : this.objectData[value];
 
 			await this.page.waitForSelector(selector);
@@ -216,6 +216,8 @@ class Scrapper {
 					}, valueToAssign);
 					break;
 			}
+
+			await this.page.waitFor(waitFor);
 
 		}
 		await this.page.waitFor(waitFor);
