@@ -217,7 +217,7 @@ class Scrapper {
 					break;
 			}
 
-			await this.page.waitFor(waitFor);
+			await this.page.waitFor(waitFor || 0);
 
 		}
 		await this.page.waitFor(waitFor);
