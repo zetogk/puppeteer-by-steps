@@ -59,6 +59,18 @@ class Scrapper {
 
 	} // end init
 
+	getBrowser() {
+
+		return this.browser;
+
+	} // end getBrowser
+
+	getCurrentPage() {
+
+		return this.page;
+
+	} // end getCurrentPage
+
 	async scrap() {
 
 		for (let $i = 0; $i < this.steps.length; $i++) {

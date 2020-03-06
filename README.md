@@ -54,6 +54,22 @@ Use:
 await s.init();
 ```
 
+### **getBrowser**
+
+This method returns the Puppeteer browser. You can use whatever Puppeteer browser method.
+
+```
+s.getBrowser();
+```
+
+### **getCurrentPage**
+
+This method returns the Puppeteer page which is being using currently. You can use whatever Puppeteer page method.
+
+```
+s.getCurrentPage();
+```
+
 ### ***async*  scrap**
 
 This method will run the different steps which have been passed to the Scrapper.
