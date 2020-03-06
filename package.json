@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-by-steps",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use puppeteer by instructions",
   "main": "index.js",
   "scripts": {
