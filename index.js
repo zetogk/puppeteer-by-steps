@@ -137,7 +137,7 @@ class Scrapper {
 
 		log(`Collecting data for selector ${selector} - multiple data? ${multiple}`);
 
-		const availableContentTypes = ['innerText', 'outerHTML', 'value'];
+		const availableContentTypes = ['innerText', 'outerHTML', 'value', 'src'];
 
 		if (!availableContentTypes.includes(contentType)) {
 
