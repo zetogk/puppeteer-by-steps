@@ -191,7 +191,7 @@ class Scrapper {
 
 					}); // Delete data
 					await this.page.focus(selector);
-					await this.page.keyboard.type(valueToAssign);
+					await this.page.keyboard.type(valueToAssign.toString());
 					break;
 
 				case 'select':
