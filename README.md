@@ -46,7 +46,7 @@ await s.scrap(); // Start the scrapping process
 
 ### ***async* init**
 
-This method is required after you instance the Scrapper.
+This method is required after you instance the Scrapper. This method will set your first page, which will called `main`.
 
 Use:
 
@@ -69,6 +69,40 @@ This method returns the Puppeteer page which is being using currently. You can u
 ```
 s.getCurrentPage();
 ```
+
+### ***async*  createPage (name: `<string>`)**
+
+This method will create a new page in the browser. It receives a name for the new page.
+
+Use:
+
+```
+await s.createPage(name);
+```
+
+Example:
+
+```
+await s.createPage('secondPage');
+```
+
+### ***async*  selectPage (name: `<string>`)**
+
+This method allow to switch between the different pages using the name. If does not exist a page with the given name by parameter, the browser will switch to the `main` page .
+
+Use:
+
+```
+await s.selectPage(name);
+```
+
+Example:
+
+```
+await s.selectPage('secondPage');
+await s.selectPage('main');
+```
+
 
 ### ***async*  scrap**
 

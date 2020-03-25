@@ -9,6 +9,7 @@ class Scrapper {
 		this.steps = steps;
 		this.dimensions = dimensions;
 		this.collectedData = {};
+		this.pages = [];
 
 		const { height, width } = this.dimensions;
 
@@ -54,10 +55,36 @@ class Scrapper {
 		this.browser = await puppeteer.launch(this.optionsBrowser);
 		const pages = await this.browser.pages();
 		this.page = pages[0];
+		this.pages['main'] = this.page;
 		const { height, width } = this.dimensions;
 		await this.page.setViewport({ width, height });
 
 	} // end init
+
+	async createPage (name) {
+
+		log('opening new page');
+		this.pages[name] = await this.browser.newPage();
+
+	} // end createPage
+
+	async selectPage (name) {
+
+		if (this.pages[name] == undefined) {
+
+			log('selecting page main');
+			this.page = this.pages['main'];
+
+		} else {
+
+			log(`selecting page ${name}`);
+			this.page = this.pages[name];
+
+		}
+
+		await this.page.bringToFront();
+
+	} // end selectPage
 
 	getBrowser() {
 
