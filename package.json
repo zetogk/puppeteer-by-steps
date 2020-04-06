@@ -14,5 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "puppeteer": "^2.0.0"
-  }
+  },
+  "url" : "https://github.com/zetogk/puppeteer-by-steps"
 }
