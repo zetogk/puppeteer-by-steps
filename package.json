@@ -15,5 +15,9 @@
   "dependencies": {
     "puppeteer": "^2.0.0"
   },
-  "url": "https://github.com/zetogk/puppeteer-by-steps"
+  "url": "https://github.com/zetogk",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/zetogk/puppeteer-by-steps"
+  }
 }
