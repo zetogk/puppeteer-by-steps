@@ -253,6 +253,12 @@ class Scrapper {
 
 	getCollectedData() {
 
+		if (arguments[0]) {
+
+			return this.collectedData[arguments[0]];
+
+		}
+
 		return this.collectedData;
 
 	} // end getCollectedData

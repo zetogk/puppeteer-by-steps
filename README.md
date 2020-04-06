@@ -117,11 +117,14 @@ await s.scrap();
 ### **getCollectedData**
 
 This method returns the data collected across the different steps.
+* If a string parameter is sent, the function will return the specific property stored according to the parameter.
+* If is not sent any parameter, an array will be returned with all data collected.
 
 Use:
 
 ```
-const data = s.getCollectedData();
+const fullData = s.getCollectedData();
+const specificData = s.getCollectedData('propertyStored');
 ```
 
 
