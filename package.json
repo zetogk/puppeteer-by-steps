@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-by-steps",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Use puppeteer by instructions",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,5 @@
   "dependencies": {
     "puppeteer": "^2.0.0"
   },
-  "url" : "https://github.com/zetogk/puppeteer-by-steps"
+  "url": "https://github.com/zetogk/puppeteer-by-steps"
 }
