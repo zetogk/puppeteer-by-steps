@@ -61,14 +61,14 @@ class Scrapper {
 
 	} // end init
 
-	async createPage (name) {
+	async createPage(name) {
 
 		log('opening new page');
 		this.pages[name] = await this.browser.newPage();
 
 	} // end createPage
 
-	async selectPage (name) {
+	async selectPage(name) {
 
 		if (this.pages[name] == undefined) {
 
@@ -119,7 +119,7 @@ class Scrapper {
 					break;
 
 				case 'go-to':
-					await this.goTo(step.link, step.waitFor);
+					await this.goTo(step.link, step.waitUntil || 'load', step.timeout || 30000, step.waitFor || 0);
 					break;
 
 				case 'press-key':
@@ -263,10 +263,13 @@ class Scrapper {
 
 	} // end getCollectedData
 
-	async goTo(url, waitFor = 0) {
+	async goTo(url, waitUntil = 'load', timeout = 30000, waitFor = 0) {
 
 		log(`Going to ${url}`);
-		await this.page.goto(url, { waitUntil: 'networkidle2' });
+		await this.page.goto(url, {
+			waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'].includes(waitUntil ? waitUntil : 'load'),
+			timeout
+		});
 		await this.page.waitFor(waitFor);
 
 	} // end goTo
