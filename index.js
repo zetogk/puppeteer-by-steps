@@ -267,7 +267,7 @@ class Scrapper {
 
 		log(`Going to ${url}`);
 		await this.page.goto(url, {
-			waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'].includes(waitUntil ? waitUntil : 'load'),
+			waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'].includes(waitUntil) ? waitUntil : 'load',
 			timeout
 		});
 		await this.page.waitFor(waitFor);
