@@ -290,10 +290,14 @@ Example dynamic value:
 
 Definition:
 
+[Definition of Puppeteer options for goTo](https://pptr.dev/#?product=Puppeteer&version=v2.1.1&show=api-pagegotourl-options)
+
 ```
 {
     type: 'go-to',
     link: <string:url:required>, // URL which will be visited
+    waitUntil: <string:default=load:options=load,domcontentloaded,networkidle0,networkidle2>,
+    timeout: <number>, // milliseconds
     waitFor: <number:default=0> // Milliseconds to await after complete the action
 }
 ```
