@@ -88,7 +88,7 @@ await s.createPage('secondPage');
 
 ### ***async*  selectPage (name: `<string>`)**
 
-This method allow to switch between the different pages using the name. If does not exist a page with the given name by parameter, the browser will switch to the `main` page .
+This method allows to switch between the different pages using the name. If does not exist a page with the given name by parameter, the browser will switch to the `main` page .
 
 Use:
 
@@ -102,6 +102,25 @@ Example:
 await s.selectPage('secondPage');
 await s.selectPage('main');
 ```
+
+### ***async*  selectPageByIndex (index: `<number>`)**
+
+This method allows to switch between the different pages using the index of array pages instances of the browser.
+
+Use:
+
+```
+await s.selectPageByIndex(index);
+```
+
+Example:
+
+```
+await s.selectPageByIndex(0);
+await s.selectPageByIndex(1);
+await s.selectPageByIndex(5);
+```
+
 
 
 ### ***async*  scrap**

@@ -86,6 +86,15 @@ class Scrapper {
 
 	} // end selectPage
 
+	async selectPageByIndex(index = 0) {
+
+		const pages = await this.browser.pages();
+		this.page = pages[index]
+
+		await this.page.bringToFront();
+
+	} // end selectPageByIndex
+
 	getBrowser() {
 
 		return this.browser;
