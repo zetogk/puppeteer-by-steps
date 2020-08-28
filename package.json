@@ -13,7 +13,7 @@
   "author": "Santiago Yepes <zetogk@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^2.0.0"
+    "puppeteer": "^2.1.1"
   },
   "url": "https://github.com/zetogk",
   "repository": {

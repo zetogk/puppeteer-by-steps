@@ -116,7 +116,7 @@ class Scrapper {
 			switch (step.type) {
 
 				case 'click':
-					await this.click(step.selector, step.waitFor);
+					await this.click(step.selector, step.XPath, step.waitFor, step.clickCount || 1 );
 					break;
 
 				case 'collect-data':
@@ -142,6 +142,14 @@ class Scrapper {
 				case 'wait-for-selector':
 					await this.waitForSelector(step.selector, step.timeout || 30000);
 					break;
+				
+				case 'wait-for-xpath':
+					await this.waitForXPath(step.XPath, step.timeout || 30000);
+					break;
+					
+				case 'wait-for-response':
+					await this.waitForResponse(step.url, step.timeout || 30000);
+					break;
 
 				default:
 					log(`${step.type} is not implemented yet.`);
@@ -152,20 +160,43 @@ class Scrapper {
 
 	} // end scrap
 
-	async click(selector, waitFor = 0) {
+	async click(selector, XPath, waitFor = 0, clickCount = 1) {
 
-		log(`Click on selector ${selector}`)
-		try {
+		if(selector){
+			
+			log(`Click on selector ${selector}`)
+			try {
+	
+				await this.page.waitForSelector(selector);
+				await this.page.click(selector, { waitUntil: 'domcontentloaded' });
+				await this.page.waitFor(waitFor);
+	
+			} catch (err) {
+	
+				error('Error doing click: ', err.message);
+	
+			}
+			
+		}
 
-			await this.page.waitForSelector(selector);
-			await this.page.click(selector, { waitUntil: 'domcontentloaded' });
-			await this.page.waitFor(waitFor);
+		if(XPath){
 
-		} catch (err) {
-
-			error('Error doing click: ', err.message);
+			log(`Click on XPath ${XPath}`)
+			try {
+				
+				await this.page.waitForXPath(XPath);
+				let x = await this.page.$x(XPath)
+				await x[0].click({clickCount});
+				await this.page.waitFor(waitFor);
+	
+			} catch (err) {
+	
+				error('Error doing click: ', err.message);
+	
+			}
 
 		}
+
 
 	} // end click
 
@@ -213,45 +244,77 @@ class Scrapper {
 
 		for (let $i = 0; $i < data.length; $i++) {
 
-			const { type, selector, origin, value, waitFor } = data[$i];
+			const { type, selector, XPath, origin, value, waitFor, clickCount = 1, delay = 0 } = data[$i];
 			const valueToAssign = origin == 'static' ? value : this.objectData[value];
 
-			await this.page.waitForSelector(selector);
+			if(selector) {
 
-			switch (type) {
-				case 'input':
-					log(`Enter input :${selector}: with value :${valueToAssign}:`);
-					await this.page.$eval(selector, (el) => {
+				await this.page.waitForSelector(selector);
+	
+				switch (type) {
+					case 'input':
+						log(`Enter input :${selector}: with value :${valueToAssign}:`);
+						await this.page.$eval(selector, (el) => {
+	
+							el.value = ''
+	
+						}); // Delete data
+						await this.page.focus(selector);
+						await this.page.keyboard.type(valueToAssign.toString());
+						break;
+	
+					case 'select':
+						log(`Select :${selector}: with value :${valueToAssign}:`);
+						await this.page.select(selector, valueToAssign);
+						break;
+	
+					case 'radio':
+						log(`Choose radio :${selector}: with value :${valueToAssign}:`);
+						await this.page.$$eval(selector, (el, valueToAssign) => {
+	
+							el[valueToAssign].click();
+	
+						}, valueToAssign);
+						break;
+	
+					default:
+						await this.page.$eval(selector, (el, valueToAssign) => {
+	
+							el.value = valueToAssign
+	
+						}, valueToAssign);
+						break;
+				}
 
-						el.value = ''
-
-					}); // Delete data
-					await this.page.focus(selector);
-					await this.page.keyboard.type(valueToAssign.toString());
-					break;
-
-				case 'select':
-					log(`Select :${selector}: with value :${valueToAssign}:`);
-					await this.page.select(selector, valueToAssign);
-					break;
-
-				case 'radio':
-					log(`Choose radio :${selector}: with value :${valueToAssign}:`);
-					await this.page.$$eval(selector, (el, valueToAssign) => {
-
-						el[valueToAssign].click();
-
-					}, valueToAssign);
-					break;
-
-				default:
-					await this.page.$eval(selector, (el, valueToAssign) => {
-
-						el.value = valueToAssign
-
-					}, valueToAssign);
-					break;
 			}
+
+			if(XPath) {
+				
+				await this.page.waitForXPath(XPath);
+				let x
+				switch (type) {
+					case 'input':
+						log(`Enter input :${XPath}: with value :${valueToAssign}:`);
+
+						x = await this.page.$x(XPath);
+						await x[0].click({clickCount}); 
+						await x[0].type(valueToAssign.toString(), {delay});
+						break;
+	
+					case 'select':
+						log(`Select :${XPath}: with value :${valueToAssign}:`);
+						x = await this.page.$x(XPath);
+						await x[0].select(valueToAssign);
+						break;
+	
+					default:
+						x = await this.page.$x(XPath);
+						await x[0].click({clickCount});
+						await x[0].type(valueToAssign);
+						break;
+				}
+				
+			}						
 
 			await this.page.waitFor(waitFor || 0);
 
@@ -306,6 +369,27 @@ class Scrapper {
 		});
 
 	} // end waitForSelector
+
+	async waitForXPath(XPath, timeout = 30000) {
+
+		log(`Waiting for the XPath ${XPath}`);
+		await this.page.waitForXPath(XPath, {
+			visible: true,
+			timeout
+		});
+
+	} // end waitForXPath
+
+	async waitForResponse(url, timeout = 30000) {
+
+		log(`Waiting for Response from: ${url}`);
+		try {
+			await this.page.waitForResponse(url, {timeout});
+		}catch (err) {
+			error('Error waiting for response::: ', err);
+		}
+
+	} // end waitForResponse
 
 } // end class Scrapper
 

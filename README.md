@@ -184,6 +184,9 @@ You can invoke it in individual way or using in steps.
 ### **click**
 
 Definition:
+You can do click on **selector** or **XPath** and set options like the example below
+
+- Click on selector:
 
 ```
 {
@@ -202,6 +205,29 @@ Example:
     waitFor: 10
 }
 ```
+
+- Click on XPath:
+
+```
+{
+    type: 'click',
+    XPath: <string:required>, // XPath which will be used for complete the action
+    waitFor: <number:default=0>, // Milliseconds to await after complete the action
+    clickCount: <number:default=1> // Number of clicks to do
+}
+```
+
+Example:
+
+```
+{
+    type: 'click',
+    XPath: 'a.mylink',
+    waitFor: 10,
+    clickCount: 2
+}
+```
+
 
 ### **collect-data**
 
@@ -263,6 +289,22 @@ You can set values to inputs, selects or radio buttoms.
 }
 ```
 
+Also in **Data** you can work with the *XPath*:
+
+```
+<Data>: {
+    type: <string:required:options=input,select>,
+    XPath: <string:required>, // XPath which will be used for complete the action
+    origin: <string:required:options=static,dynamic>, // 'Static' will take the value of the prop *value*, 'dynamic' will take the value of the *objectData* passed at moment of instance creation.
+    value: <string:required>, // value to be set in the input or select field.
+    waitFor: <number:default=0>, // Milliseconds to await after complete the action
+    clickCount: <number:default=1>, // Number of clicks to do in the field before start typing
+    delay: <number:default=0> // Milliseconds to delay in typing
+}
+
+```
+
+
 Example static value:
 
 ```
@@ -276,7 +318,7 @@ Example static value:
         waitFor: 1000
     },{
         type: 'input',
-        selector: '#phonenumber',
+        Xpath: '//*[@id="Submission:LOBStepGroup',
         origin: 'static',
         value: '18601234567' //*18601234567* will be the value set
     }],
@@ -395,6 +437,51 @@ Example:
     timeout: 10000
 }
 ```
+
+### **wait-for-xpath**
+
+Definition:
+
+```
+{
+    type: 'wait-for-xpath',
+    XPath: <string:required>, // XPath which will be used for complete the action
+    timeout: <number:default=30000> // milliseconds
+}
+```
+
+Example:
+
+```
+{
+    type: 'wait-for-xpath',
+    XPath: '//*[@id="XPath"]',
+    timeout: 10000
+}
+```
+
+### **wait-for-response**
+
+Definition:
+
+```
+{
+    type: 'wait-for-response',
+    url: <string:required>, // url which will be used for complete the action
+    timeout: <number:default=30000> // milliseconds
+}
+```
+
+Example:
+
+```
+{
+    type: 'wait-for-response',
+    url: 'https://example.com',
+    timeout: 10000
+}
+```
+
 
 ## Authors
 * zetogk <zetogk@gmail.com>
