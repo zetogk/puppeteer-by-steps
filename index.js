@@ -142,6 +142,14 @@ class Scrapper {
 				case 'wait-for-selector':
 					await this.waitForSelector(step.selector, step.timeout || 30000);
 					break;
+				
+				case 'wait-for-xpath':
+					await this.waitForXPath(step.XPath, step.timeout || 30000);
+					break;
+					
+				case 'wait-for-response':
+					await this.waitForResponse(step.url, step.timeout || 30000);
+					break;
 
 				default:
 					log(`${step.type} is not implemented yet.`);
@@ -329,6 +337,27 @@ class Scrapper {
 		});
 
 	} // end waitForSelector
+
+	async waitForXPath(XPath, timeout = 30000) {
+
+		log(`Waiting for the XPath ${XPath}`);
+		await this.page.waitForXPath(XPath, {
+			visible: true,
+			timeout
+		});
+
+	} // end waitForXPath
+
+	async waitForResponse(url, timeout = 30000) {
+
+		log(`Waiting for Response from: ${url}`);
+		try {
+			await this.page.waitForResponse(url, {timeout});
+		}catch (err) {
+			error('Error waiting for response::: ', err);
+		}
+
+	} // end waitForResponse
 
 } // end class Scrapper
 
