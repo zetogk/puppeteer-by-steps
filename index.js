@@ -244,45 +244,77 @@ class Scrapper {
 
 		for (let $i = 0; $i < data.length; $i++) {
 
-			const { type, selector, origin, value, waitFor } = data[$i];
+			const { type, selector, XPath, origin, value, waitFor, clickCount = 1, delay = 0 } = data[$i];
 			const valueToAssign = origin == 'static' ? value : this.objectData[value];
 
-			await this.page.waitForSelector(selector);
+			if(selector) {
 
-			switch (type) {
-				case 'input':
-					log(`Enter input :${selector}: with value :${valueToAssign}:`);
-					await this.page.$eval(selector, (el) => {
+				await this.page.waitForSelector(selector);
+	
+				switch (type) {
+					case 'input':
+						log(`Enter input :${selector}: with value :${valueToAssign}:`);
+						await this.page.$eval(selector, (el) => {
+	
+							el.value = ''
+	
+						}); // Delete data
+						await this.page.focus(selector);
+						await this.page.keyboard.type(valueToAssign.toString());
+						break;
+	
+					case 'select':
+						log(`Select :${selector}: with value :${valueToAssign}:`);
+						await this.page.select(selector, valueToAssign);
+						break;
+	
+					case 'radio':
+						log(`Choose radio :${selector}: with value :${valueToAssign}:`);
+						await this.page.$$eval(selector, (el, valueToAssign) => {
+	
+							el[valueToAssign].click();
+	
+						}, valueToAssign);
+						break;
+	
+					default:
+						await this.page.$eval(selector, (el, valueToAssign) => {
+	
+							el.value = valueToAssign
+	
+						}, valueToAssign);
+						break;
+				}
 
-						el.value = ''
-
-					}); // Delete data
-					await this.page.focus(selector);
-					await this.page.keyboard.type(valueToAssign.toString());
-					break;
-
-				case 'select':
-					log(`Select :${selector}: with value :${valueToAssign}:`);
-					await this.page.select(selector, valueToAssign);
-					break;
-
-				case 'radio':
-					log(`Choose radio :${selector}: with value :${valueToAssign}:`);
-					await this.page.$$eval(selector, (el, valueToAssign) => {
-
-						el[valueToAssign].click();
-
-					}, valueToAssign);
-					break;
-
-				default:
-					await this.page.$eval(selector, (el, valueToAssign) => {
-
-						el.value = valueToAssign
-
-					}, valueToAssign);
-					break;
 			}
+
+			if(XPath) {
+				
+				await this.page.waitForXPath(XPath);
+				let x
+				switch (type) {
+					case 'input':
+						log(`Enter input :${XPath}: with value :${valueToAssign}:`);
+
+						x = await this.page.$x(XPath);
+						await x[0].click({clickCount}); 
+						await x[0].type(valueToAssign.toString(), {delay});
+						break;
+	
+					case 'select':
+						log(`Select :${XPath}: with value :${valueToAssign}:`);
+						x = await this.page.$x(XPath);
+						await x[0].select(valueToAssign);
+						break;
+	
+					default:
+						x = await this.page.$x(XPath);
+						await x[0].click({clickCount});
+						await x[0].type(valueToAssign);
+						break;
+				}
+				
+			}						
 
 			await this.page.waitFor(waitFor || 0);
 
