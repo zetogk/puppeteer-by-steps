@@ -116,7 +116,7 @@ class Scrapper {
 			switch (step.type) {
 
 				case 'click':
-					await this.click(step.selector, step.waitFor);
+					await this.click(step.selector, step.XPath, step.waitFor, step.clickCount || 1 );
 					break;
 
 				case 'collect-data':
@@ -152,20 +152,43 @@ class Scrapper {
 
 	} // end scrap
 
-	async click(selector, waitFor = 0) {
+	async click(selector, XPath, waitFor = 0, clickCount = 1) {
 
-		log(`Click on selector ${selector}`)
-		try {
+		if(selector){
+			
+			log(`Click on selector ${selector}`)
+			try {
+	
+				await this.page.waitForSelector(selector);
+				await this.page.click(selector, { waitUntil: 'domcontentloaded' });
+				await this.page.waitFor(waitFor);
+	
+			} catch (err) {
+	
+				error('Error doing click: ', err.message);
+	
+			}
+			
+		}
 
-			await this.page.waitForSelector(selector);
-			await this.page.click(selector, { waitUntil: 'domcontentloaded' });
-			await this.page.waitFor(waitFor);
+		if(XPath){
 
-		} catch (err) {
-
-			error('Error doing click: ', err.message);
+			log(`Click on XPath ${XPath}`)
+			try {
+				
+				await this.page.waitForXPath(XPath);
+				let x = await this.page.$x(XPath)
+				await x[0].click({clickCount});
+				await this.page.waitFor(waitFor);
+	
+			} catch (err) {
+	
+				error('Error doing click: ', err.message);
+	
+			}
 
 		}
+
 
 	} // end click
 
